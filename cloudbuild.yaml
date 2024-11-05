@@ -1,23 +1,23 @@
 steps:
   # Step 1: Checkout the code from GitHub
   - name: 'gcr.io/cloud-builders/git'
-    args: ['clone', 'https://github.com/zeshansaid/ai-object-remover']
+    args: ['clone', 'https://github.com/zeshansaid/ai-bg-remove']
   
   # Step 2: Change directory to the repository
   - name: 'gcr.io/cloud-builders/docker'
   # your-repo-directory
-    dir: 'ai-object-remover'
+    dir: 'ai-bg-remove'
     args: [
           'build',
           '-t',
-          'gcr.io/stone-composite-436518-s3/obj-rem-ai',
+          'gcr.io/stone-composite-436518-s3/bg-rem-ai',
           '.'
           ]
   
   # Step 3: Push the Docker image to Google Container Registry
   - name: 'gcr.io/cloud-builders/docker'
-    dir: 'obj-rem-ai'
-    args: ['push', 'gcr.io/stone-composite-436518-s3/obj-rem-ai']
+    dir: 'bg-rem-ai'
+    args: ['push', 'gcr.io/stone-composite-436518-s3/bg-rem-ai']
 
   
   
@@ -27,9 +27,9 @@ steps:
       - 'gcloud'
       - 'run'
       - 'deploy'
-      - 'obj-rem-ai'
+      - 'bg-rem-ai'
       - '--image'
-      - 'gcr.io/stone-composite-436518-s3/obj-rem-ai'
+      - 'gcr.io/stone-composite-436518-s3/bg-rem-ai'
       - '--platform'
       - 'managed'
       - '--region'
